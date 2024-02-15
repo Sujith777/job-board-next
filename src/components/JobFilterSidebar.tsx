@@ -2,10 +2,10 @@ import Select from "./ui/select";
 import prisma from "@/lib/prisma";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Button } from "./ui/button";
 import { jobTypes } from "@/lib/job-types";
 import { redirect } from "next/navigation";
 import { JobFilterValues, jobFilterSchema } from "@/lib/validation";
+import FormSubmitButton from "./FormSubmitButton";
 
 async function filterJobs(formData: FormData) {
   "use server";
@@ -93,9 +93,7 @@ export default async function JobFilterSidebar({
             />
             <Label htmlFor="remote">Remote Jobs</Label>
           </div>
-          <Button type="submit" className="w-full">
-            Filter Jobs
-          </Button>
+          <FormSubmitButton className="w-full">Filter Jobs</FormSubmitButton>
         </div>
       </form>
     </aside>
