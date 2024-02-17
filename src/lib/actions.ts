@@ -65,6 +65,7 @@ export async function createJobPosting(formData: FormData) {
 type FormState = { error?: string } | undefined;
 
 export async function approveJobSubmission(
+  prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
   try {
@@ -93,7 +94,10 @@ export async function approveJobSubmission(
   }
 }
 
-export async function deleteJobSubmission(formData: FormData) {
+export async function deleteJobSubmission(
+  prevState: FormState,
+  formData: FormData,
+) {
   try {
     const jobId = parseInt(formData.get("jobId") as string);
     const user = await currentUser();
