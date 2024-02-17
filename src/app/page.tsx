@@ -10,6 +10,7 @@ interface PageProps {
     type?: string;
     location?: string;
     remote?: string;
+    page?: string;
   };
 }
 
@@ -41,7 +42,7 @@ export function generateMetadata({
 }
 
 export default async function Home({
-  searchParams: { query, type, location, remote },
+  searchParams: { query, type, location, remote, page },
 }: PageProps) {
   const filterValues: JobFilterValues = {
     query,
@@ -51,14 +52,17 @@ export default async function Home({
   };
 
   return (
-    <main className="max-w-5xl m-auto px-3 my-10 space-y-10">
+    <main className="m-auto my-10 max-w-5xl space-y-10 px-3">
       <div className="space-y-5 text-center">
         <H1>{getTitle(filterValues)}</H1>
         <p className="text-muted-foreground">Find your dream job here</p>
       </div>
-      <section className="flex flex-col md:flex-row gap-4">
+      <section className="flex flex-col gap-4 md:flex-row">
         <JobFilterSidebar defaultValues={filterValues} />
-        <JobResults filterValues={filterValues} />
+        <JobResults
+          filterValues={filterValues}
+          page={page ? parseInt(page) : undefined}
+        />
       </section>
     </main>
   );
