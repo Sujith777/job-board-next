@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import { CreateJobValues, createJobSchema } from "@/lib/validation";
 import LoadingButton from "./LoadingButton";
+import { createJobPosting } from "@/lib/actions";
 
 export default function NewJobForm() {
   const form = useForm<CreateJobValues>({
@@ -38,7 +39,18 @@ export default function NewJobForm() {
   } = form;
 
   async function onSubmit(values: CreateJobValues) {
-    alert(JSON.stringify(values, null, 2));
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
+
+    try {
+      await createJobPosting(formData);
+    } catch (error) {
+      alert("Something went wrong, please try again");
+    }
   }
 
   return (
