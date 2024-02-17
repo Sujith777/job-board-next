@@ -15,6 +15,8 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useForm } from "react-hook-form";
 import LocationInput from "./LocationInput";
+import RichTextEditor from "./RichTextEditor";
+import { draftToMarkdown } from "markdown-draft-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import { CreateJobValues, createJobSchema } from "@/lib/validation";
@@ -225,6 +227,24 @@ export default function NewJobForm() {
                 />
               </div>
             </div>
+            <FormField
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <Label onClick={() => setFocus("description")}>
+                    Description
+                  </Label>
+                  <FormControl>
+                    <RichTextEditor
+                      onChange={(draft) => draftToMarkdown(draft)}
+                      ref={field.ref}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
       </div>
