@@ -20,7 +20,7 @@ const applicationSchema = z
     applicationUrl: z.string().max(100).url().optional().or(z.literal("")),
   })
   .refine((data) => data.applicationEmail || data.applicationUrl, {
-    message: "Email of URL is required",
+    message: "Email or URL is required",
     path: ["applicationEmail"],
   });
 
